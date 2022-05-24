@@ -1,13 +1,12 @@
 package com.github.alexbabkin.app;
 
+import com.github.alexbabkin.cart.Cart;
+import com.github.alexbabkin.config.AppConfiguration;
+import com.github.alexbabkin.product.Repository;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-
-import com.github.alexbabkin.cart.Cart;
-import com.github.alexbabkin.config.AppConfiguration;
-import com.github.alexbabkin.product.Repository;
 
 public class Application {
 
@@ -48,12 +47,10 @@ public class Application {
                         return;
                     default:
                         System.out.println("unrecognized command");
-
                 }
             } catch (IOException e) {
                 System.out.println(String.format("Error: %s", e.getMessage()));
             }
-
         }
     }
 }

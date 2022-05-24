@@ -5,6 +5,4 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @ComponentScan("com.github.alexbabkin")
-public class AppConfiguration {
-
-}
+public class AppConfiguration {}

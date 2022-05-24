@@ -1,10 +1,9 @@
 package com.github.alexbabkin.product;
 
+import java.util.ArrayList;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
-
-import java.util.ArrayList;
 
 @Component
 @Scope(BeanDefinition.SCOPE_SINGLETON)
@@ -22,12 +21,8 @@ public class Repository {
     }
 
     public Product getById(Integer id) {
-        if (id == null)
-            return null;
+        if (id == null) return null;
 
-        return products.stream()
-                .filter(product -> product.getId() == id)
-                .findFirst()
-                .orElse(null);
+        return products.stream().filter(product -> product.getId() == id).findFirst().orElse(null);
     }
 }
