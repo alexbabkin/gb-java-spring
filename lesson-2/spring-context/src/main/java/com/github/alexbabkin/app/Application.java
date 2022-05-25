@@ -49,7 +49,7 @@ public class Application {
                         System.out.println("unrecognized command");
                 }
             } catch (IOException e) {
-                System.out.println(String.format("Error: %s", e.getMessage()));
+                System.out.printf("Error: %s%n", e.getMessage());
             }
         }
     }
