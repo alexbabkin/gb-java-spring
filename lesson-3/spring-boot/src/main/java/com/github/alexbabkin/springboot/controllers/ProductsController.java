@@ -57,8 +57,8 @@ public class ProductsController {
         var newCost = product.getCost() - 1;
         if (newCost > 0) {
             product.setCost(newCost);
+            service.save(product);
         }
-        service.save(product);
         return "redirect:/show/{id}";
     }
 }
