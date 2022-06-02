@@ -25,6 +25,14 @@ public class Product {
         return title;
     }
 
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setCost(Double cost) {
+        this.cost = cost;
+    }
+
     public Double getCost() {
         return cost;
     }

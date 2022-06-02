@@ -26,7 +26,6 @@ public class ProductsController {
         return "products";
     }
 
-    // GET http://localhost:8189/app/show/{id}
     @GetMapping(value = "/show/{id}")
     public String showProductsPageById(Model model, @PathVariable Long id){
         model.addAttribute("product", service.findById(id));
@@ -44,4 +43,22 @@ public class ProductsController {
         return "redirect:/show_all";
     }
 
+    @PostMapping(value = "/increase_cost/{id}")
+    public String increaseCost(@PathVariable Long id) {
+        var product= service.findById(id);
+        product.setCost(product.getCost() + 1);
+        service.save(product);
+        return "redirect:/show/{id}";
+    }
+
+    @PostMapping(value = "/decrease_cost/{id}")
+    public String decreaseCost(@PathVariable Long id) {
+        var product= service.findById(id);
+        var newCost = product.getCost() - 1;
+        if (newCost > 0) {
+            product.setCost(newCost);
+        }
+        service.save(product);
+        return "redirect:/show/{id}";
+    }
 }
