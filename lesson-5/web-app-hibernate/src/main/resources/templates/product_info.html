@@ -16,6 +16,13 @@
     <h3 th:text="${'Назввание: '+ product.title}"></h3>
     <h3 th:text="${'Цена: '+ product.cost}"></h3>
 
+    <form method="post" th:action="@{'/increase_cost/' + ${product.id}}">
+        <button type="submit" class="btn btn-primary">+ 1</button>
+    </form>
+    <form method="post" th:action="@{'/decrease_cost/' + ${product.id}}">
+        <button type="submit" class="btn btn-primary">- 1</button>
+    </form>
+    </p>
     <a th:href="@{'/show_all'}" type="button" class="btn btn-primary">Список всех продуктов</a>
 </div>
 </body>
