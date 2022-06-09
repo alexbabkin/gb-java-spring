@@ -28,6 +28,14 @@ public class ProductRepository {
     }
 
     public void save(Product product) {
+        if (product.getId() != null) {
+            var p = findById(product.getId());
+            if (p != null) {
+                p.setCost(product.getCost());
+                p.setTitle(product.getTitle());
+                return;
+            }
+        }
         products.add(product);
     }
 

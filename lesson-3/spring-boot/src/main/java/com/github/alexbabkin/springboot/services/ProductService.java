@@ -1,12 +1,10 @@
 package com.github.alexbabkin.springboot.services;
 
-import java.util.Collection;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import com.github.alexbabkin.springboot.models.Product;
 import com.github.alexbabkin.springboot.reporsitories.ProductRepository;
+import java.util.Collection;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 @Service
 public class ProductService {
