@@ -1,6 +1,9 @@
 package com.github.alexbabkin.hiber2.dao;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +11,7 @@ import org.springframework.stereotype.Component;
 
 import com.github.alexbabkin.hiber2.db.SessionFactoryWrapper;
 import com.github.alexbabkin.hiber2.entities.Customer;
+import com.github.alexbabkin.hiber2.entities.Order;
 import com.github.alexbabkin.hiber2.entities.Product;
 
 @Component
@@ -19,67 +23,53 @@ public class CustomerDao {
         this.sessionFactoryWrapper = sessionFactoryWrapper;
     }
 
-    public void createCustomer(String name) {
+    public void saveOrUpdate(Customer customer) {
         try (Session session = sessionFactoryWrapper.getFactory().getCurrentSession()) {
             session.beginTransaction();
-            Customer c = new Customer(name);
-            session.save(c);
+            session.saveOrUpdate(customer);
             session.getTransaction().commit();
         }
     }
 
-    public Customer getCustomer(long id) {
+    public Customer findById(long id) {
         try (Session session = sessionFactoryWrapper.getFactory().getCurrentSession()) {
             session.beginTransaction();
-            Customer c = session.get(Customer.class, id);
-            List<Order> ol = c.getOrders();
+            Customer customer = session.get(Customer.class, id);
             session.getTransaction().commit();
-            return c;
+            return customer;
         }
     }
 
-    public List<Order> getCustomerOrdersById(long id) {
+    public List<Order> getCustomerOrders(long id) {
         try (Session session = sessionFactoryWrapper.getFactory().getCurrentSession()) {
             session.beginTransaction();
-            Customer c = session.get(Customer.class, id);
-            List<Order> ol = new ArrayList<>();
-            ol.addAll(c.getOrders());
+            Customer customer = session.get(Customer.class, id);
+            List<Order> customerOrders = new ArrayList<>(customer.getOrders());
             session.getTransaction().commit();
-            return ol;
+            return customerOrders;
         }
     }
 
-    public List<Product> getCustomerProductListById(long id) {
+    public List<Product> getCustomerProducts(long id) {
         try (Session session = sessionFactoryWrapper.getFactory().getCurrentSession()) {
             session.beginTransaction();
-            Customer c = session.get(Customer.class, id);
-            List<Order> ol = c.getOrders();
-            List<Product> pl = new ArrayList<>();
-            for (Order o : ol) {
-                for (OrderDetails od : o.getOrderDetails()) {
-                    if (pl.contains(od.getProduct())) continue;
-                    pl.add(od.getProduct());
-                }
-            }
+            Customer customer = session.get(Customer.class, id);
+            List<Product> products = customer.getOrders()
+                    .stream()
+                    .map(Order::getProducts)
+                    .flatMap(Collection::stream)
+                    .collect(Collectors.toList());
             session.getTransaction().commit();
-            return pl;
+            return products;
         }
     }
 
-    public void updateCustomer(long id, String name) {
+    public  void deleteById(long id) {
         try (Session session = sessionFactoryWrapper.getFactory().getCurrentSession()) {
             session.beginTransaction();
-            Customer c = session.get(Customer.class, id);
-            c.setName(name);
-            session.getTransaction().commit();
-        }
-    }
-
-    public  void deleteCustomer(long id) {
-        try (Session session = sessionFactoryWrapper.getFactory().getCurrentSession()) {
-            session.beginTransaction();
-            Customer c = session.get(Customer.class, id);
-            session.delete(c);
+            session.createQuery("delete from Customer c where c.id = :customerId")
+                    .setParameter("customerId", id)
+                    .executeUpdate();
             session.getTransaction().commit();
         }
     }

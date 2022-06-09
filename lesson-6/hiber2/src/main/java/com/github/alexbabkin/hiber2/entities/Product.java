@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
@@ -24,8 +26,12 @@ public class Product {
     @Column(name = "cost")
     private Long cost;
 
-    @Column(name = "orders")
-    @ManyToMany()
+    @ManyToMany
+    @JoinTable(
+            name = "products_orders",
+            joinColumns = @JoinColumn(name = "product_id"),
+            inverseJoinColumns = @JoinColumn(name = "order_id")
+    )
     private List<Order> orders;
 
     public Long getId() {
