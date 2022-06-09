@@ -21,6 +21,7 @@ public class Customer {
     @Column(name = "name")
     private String name;
 
+
     @OneToMany(mappedBy = "customer")
     private List<Order> orders;
 
@@ -28,8 +29,14 @@ public class Customer {
         this.name = name;
     }
 
-    public Customer() {
+    public Customer() { }
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {
