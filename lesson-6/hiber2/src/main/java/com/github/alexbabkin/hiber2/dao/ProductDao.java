@@ -1,13 +1,14 @@
 package com.github.alexbabkin.hiber2.dao;
 
+import com.github.alexbabkin.hiber2.db.SessionFactoryWrapper;
+import com.github.alexbabkin.hiber2.entities.Customer;
+import com.github.alexbabkin.hiber2.entities.Order;
+import com.github.alexbabkin.hiber2.entities.Product;
 import java.util.List;
-
+import java.util.stream.Collectors;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import com.github.alexbabkin.hiber2.db.SessionFactoryWrapper;
-import com.github.alexbabkin.hiber2.entities.Product;
 
 @Component
 public class ProductDao {
@@ -31,7 +32,7 @@ public class ProductDao {
     public List<Product> findAll() {
         try (Session session = sessionFactoryWrapper.getFactory().getCurrentSession()) {
             session.beginTransaction();
-            var products = session.createQuery("from Product").list();
+            var products = session.createQuery("select p from Product p").list();
             session.getTransaction().commit();
             return products;
         }
@@ -53,6 +54,21 @@ public class ProductDao {
             session.saveOrUpdate(product);
             session.getTransaction().commit();
             return product;
+        }
+    }
+
+    public List<Customer> getProductCustomers(Long productId) {
+        try (Session session = sessionFactoryWrapper.getFactory().getCurrentSession()) {
+            session.beginTransaction();
+            Product product = session.get(Product.class, productId);
+            List<Customer> customers =
+                    product.getOrders()
+                            .stream()
+                            .map(Order::getCustomer)
+                            .distinct()
+                            .collect(Collectors.toList());
+            session.getTransaction().commit();
+            return customers;
         }
     }
 }

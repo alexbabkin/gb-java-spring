@@ -1,7 +1,6 @@
 package com.github.alexbabkin.hiber2.entities;
 
 import java.util.List;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,6 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -30,9 +30,11 @@ public class Product {
     @JoinTable(
             name = "products_orders",
             joinColumns = @JoinColumn(name = "product_id"),
-            inverseJoinColumns = @JoinColumn(name = "order_id")
-    )
+            inverseJoinColumns = @JoinColumn(name = "order_id"))
     private List<Order> orders;
+
+    @OneToMany(mappedBy = "actualProduct")
+    private List<OrderProduct> orderProducts;
 
     public Long getId() {
         return id;
@@ -63,6 +65,22 @@ public class Product {
     public Product(String title, Long cost) {
         this.cost = cost;
         this.title = title;
+    }
+
+    public List<Order> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<Order> orders) {
+        this.orders = orders;
+    }
+
+    public List<OrderProduct> getOrderProducts() {
+        return orderProducts;
+    }
+
+    public void setOrderProducts(List<OrderProduct> orderProducts) {
+        this.orderProducts = orderProducts;
     }
 
     public String toString() {

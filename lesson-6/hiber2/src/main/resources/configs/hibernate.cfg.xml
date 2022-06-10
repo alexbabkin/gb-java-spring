@@ -15,5 +15,7 @@
 
         <mapping class="com.github.alexbabkin.hiber2.entities.Product"/>
         <mapping class="com.github.alexbabkin.hiber2.entities.Customer"/>
+        <mapping class="com.github.alexbabkin.hiber2.entities.Order"/>
+        <mapping class="com.github.alexbabkin.hiber2.entities.OrderProduct"/>
     </session-factory>
 </hibernate-configuration>
