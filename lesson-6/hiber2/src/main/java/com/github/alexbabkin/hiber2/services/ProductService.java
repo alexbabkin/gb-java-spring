@@ -3,7 +3,6 @@ package com.github.alexbabkin.hiber2.services;
 import com.github.alexbabkin.hiber2.dao.ProductDao;
 import com.github.alexbabkin.hiber2.entities.Customer;
 import com.github.alexbabkin.hiber2.entities.Product;
-
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
