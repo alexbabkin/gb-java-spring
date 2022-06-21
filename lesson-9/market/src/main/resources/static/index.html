@@ -11,37 +11,101 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular-route.min.js"></script>
-
+    <script src="index.js"></script>
 </head>
 <body ng-app="market-front">
-<div class="container" ng-controller="indexController">
-    <nav class="navbar navbar-expand-lg bg-light">
-        <div class="container-fluid">
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#!/">Главная</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#!/store">Каталог продуктов</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#!/create_product">Добавить товар(техн)</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
+<div class="container" ng-controller="appController">
+    <h2>Главная страница</h2>
+<!--    <span ng-repeat="p in products"> {{p.id+' '+ p.title + ' '+ p.price +' '}} </span>-->
+    <table class="table">
+        <thead>
+        <tr>
+            <td>ID</td>
+            <td>Название</td>
+            <td>Стоимость</td>
+            <td>Info</td>
+            <td></td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="p in productsPage.content">
+            <td>{{p.id}}</td>
+            <td>{{p.title}}</td>
+            <td>{{p.price}}</td>
+            <td>
+                <button type="button" class="btn btn-primary" ng-click="showInfo(p)" >Подробнее</button>
+            </td>
+            <td>
+                <button type="button" class="btn btn-primary" ng-click="prepareProductForUpdate(p.id)" >Изменить</button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <nav aria-label="Page navigation example">
+        <ul class="pagination">
+            <li class="page-item">
+                <a class="page-link" aria-label="Previous" ng-click="prevPage()">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+
+            <li class="page-item" ng-repeat="pageIndex in paginationArray">
+                <button class="page-link" ng-click="loadProducts(pageIndex)">{{pageIndex}}</button>
+            </li>
+
+            <li class="page-item">
+                <a class="page-link" aria-label="Next" ng-click="nextPage()">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        </ul>
     </nav>
 
 
+    <p></p>
+    <h3>Добавить продукт</h3>
 
-    <ng-view></ng-view>
+    <form novalidate ng-submit="createNewProduct()">
+        <div class="mb-3">
+            <label  class="form-label">Название</label>
+            <input type="text" class="form-control" placeholder="Название" ng-model="new_product.title">
+        </div>
+        <div class="mb-3">
+            <label  class="form-label">Цена</label>
+            <input type="text" class="form-control" placeholder="Цена" ng-model="new_product.price">
+        </div>
+<!--        <div class="mb-3">-->
+<!--            <label  class="form-label">Название категории</label>-->
+<!--            <input type="text" class="form-control" placeholder="Название категории" ng-model="new_product.categoryTitle">-->
+<!--        </div>-->
+        <select class="form-select" ng-model="new_product.categoryTitle">
+            <option value="Food">Food</option>
+<!--            <option ng-repeat="p in productsPage.content">{{p}}</option>-->
+        </select>
+        <p></p>
+        <button type="submit" class="btn btn-primary">Добавить</button>
+    </form>
 
-    <script src="index.js"></script>
-    <script src="store/store.js"></script>
-    <script src="welcome/welcome.js"></script>
-    <script src="edit_product/edit_product.js"></script>
-    <script src="create_product/create_product.js"></script>
+
+    <p></p>
+    <h3>Обновить продукт</h3>
+
+    <form novalidate ng-submit="updateProduct()">
+        <div class="mb-3">
+            <label  class="form-label">Название</label>
+            <input type="text" class="form-control" placeholder="Название" ng-model="updated_product.title">
+        </div>
+        <div class="mb-3">
+            <label  class="form-label">Цена</label>
+            <input type="number" class="form-control" placeholder="Цена" ng-model="updated_product.price">
+        </div>
+        <select class="form-select" ng-model="updated_product.categoryTitle">
+            <option value="Food">Food</option>
+        </select>
+        <p></p>
+        <button type="submit" class="btn btn-primary">Сохранить изменения</button>
+    </form>
 
 </div>
 </body>
