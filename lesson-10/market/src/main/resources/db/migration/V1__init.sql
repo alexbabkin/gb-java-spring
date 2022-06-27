@@ -4,10 +4,10 @@ create table categories
     title varchar(255)
 );
 insert into categories (title)
-values ('Meat'),
-       ('Fish'),
-       ('Vegetable'),
-       ('Fruit');
+values ('cat1'),
+       ('cat2'),
+       ('cat3'),
+       ('cat4');
 create table products
 (
     id          bigserial primary key,
@@ -16,24 +16,24 @@ create table products
     category_id bigint references categories (id)
 );
 insert into products(title, price, category_id)
-values ('Peach', 1, 4),
-       ('Orange', 2, 4),
-       ('Cucumber', 4, 3),
-       ('Tomato', 3, 3),
-       ('Pear', 6, 4),
-       ('Beef', 2, 1),
-       ('Ham', 4, 1),
-       ('Cod', 3, 2),
-       ('Salmon', 6, 2),
-       ('Broccoli', 2, 3),
-       ('Carrot', 4, 3),
-       ('Garlic', 3, 3),
-       ('Onion', 6, 3),
-       ('Pea', 2, 3),
-       ('Apple', 4, 4),
-       ('Banana', 3, 4),
-       ('Lemon', 6, 4),
-       ('Spinach', 4, 3),
-       ('Pike', 3, 2),
-       ('Turkey', 6, 1),
-       ('Chicken', 10, 1);
+values ('prod1', 1, 4),
+       ('prod2', 2, 4),
+       ('prod3', 4, 3),
+       ('prod4', 3, 3),
+       ('prod5', 6, 4),
+       ('prod6', 2, 1),
+       ('prod7', 4, 1),
+       ('prod8', 3, 2),
+       ('prod9', 6, 2),
+       ('prod10', 2, 3),
+       ('prod11', 4, 3),
+       ('prod12', 3, 3),
+       ('prod13', 6, 3),
+       ('prod14', 2, 3),
+       ('prod15', 4, 4),
+       ('prod16', 3, 4),
+       ('prod17', 6, 4),
+       ('prod18', 4, 3),
+       ('prod19', 3, 2),
+       ('prod20', 6, 1),
+       ('prod21', 10, 1);
