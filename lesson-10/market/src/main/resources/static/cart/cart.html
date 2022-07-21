@@ -1,0 +1,26 @@
+<div>
+    <h2>Product catalog</h2>
+    <table class="table">
+        <thead>
+        <tr>
+            <td>ID</td>
+            <td>Title</td>
+            <td>Price</td>
+            <td>Category</td>
+            <td></td>
+            <td></td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="product in productsInCart.data">
+            <td>{{product.id}}</td>
+            <td>{{product.title}}</td>
+            <td>{{product.price}}</td>
+            <td>{{product.categoryTitle}}</td>
+            <td>
+                <button type="button" class="btn btn-primary" ng-click="deleteProduct(product)">Delete</button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
